@@ -14,6 +14,7 @@ public class UsuarioInfo {
         this.mail = u.mail;
         this.fechaIngreso = u.fechaIngreso.Value;
         this.rol = u.rol.nombre;
+        this.isDisponible = u.disponible.Value;
     }
 
     public int idUsuario { get; set; }
@@ -28,4 +29,5 @@ public class UsuarioInfo {
     public string mail { get; set; }
     public DateTime fechaIngreso { get; set; }
     public string rol { get; set; }
+    public bool isDisponible { get; set; }
 }

@@ -14,6 +14,5 @@ public class UsuarioSign {
     public string telefono { get; set; }
     public string mail { get; set; }
     
-    public string pass { get; set; }
     public string idRol { get; set; }
 }

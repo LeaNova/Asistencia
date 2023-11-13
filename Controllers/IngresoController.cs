@@ -26,13 +26,16 @@ public class IngresoController : ControllerBase {
 				for(int i = 0; i < 2; i++) {
 					code += rdmChars[random.Next(0, rdmChars.Length)];
 				}
+                
+                string codIngreso = date.ToString("ddMMyyyy") + code;
 
                 Ingreso ingreso = new Ingreso{
-                    codIngreso = date.ToString("ddMMyyyy") + code,
+                    codIngreso = codIngreso,
                     fecha = date
                 };
 
-                context.ingresos.Add(ingreso);
+                await context.ingresos.AddAsync(ingreso);
+                createAsistencias(codIngreso);
                 context.SaveChanges();
 
                 return CreatedAtAction(nameof(get), new { codIngreso = ingreso.codIngreso }, ingreso);
@@ -103,5 +106,25 @@ public class IngresoController : ControllerBase {
         } catch(Exception ex) {
             return BadRequest(ex.Message);
         }
+    }
+
+    private void createAsistencias(string codIngreso) {
+        var idUsuarios = context.usuarios
+            .Include(x => x.rol)
+            .Where(x => x.rol.nombre != "Admin")
+            .Select(x => x.idUsuario)
+            .ToList();
+
+        IList<Asistencia> lista = new List<Asistencia>();
+        foreach(int item in idUsuarios) {
+            Asistencia x = new Asistencia {
+                codIngreso = codIngreso,
+                idUsuario = item,
+            };
+            lista.Add(x);
+        }
+
+        context.asistencias.AddRange(lista);
+        context.SaveChanges();
     }
 }

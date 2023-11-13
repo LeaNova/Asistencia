@@ -16,7 +16,7 @@ public class AsistenciaController : ControllerBase {
         this.context = context;
     }
 
-    [HttpPost("marcar")]
+    [HttpPatch("marcar")]
     public async Task<ActionResult> alta([FromForm] Marca marca) {
         try {
             int userId = int.Parse(User.Claims.First(x => x.Type == "id").Value);
@@ -24,8 +24,8 @@ public class AsistenciaController : ControllerBase {
                 .Where(x => x.codIngreso == marca.codIngreso && x.idUsuario == userId)
                 .FirstOrDefaultAsync();
 
-            if(result != null && result.horaSalida == null) {
-                result.horaSalida = marca.time;
+            if(result != null && result.horaIngreso == null) {
+                result.horaIngreso = marca.time;
 
                 context.asistencias.Update(result);
                 context.SaveChanges();
@@ -33,15 +33,10 @@ public class AsistenciaController : ControllerBase {
                 return Ok();
             }
 
-            if(result == null) {
-                Asistencia asistencia = new() {
-                    codIngreso = marca.codIngreso,
-                    idUsuario = userId,
-                    horaIngreso = marca.time,
-                    horaSalida = null
-                };
+            if(result != null && result.horaIngreso != null && result.horaSalida == null) {
+                result.horaSalida = marca.time;
 
-                context.asistencias.Add(asistencia);
+                context.asistencias.Update(result);
                 context.SaveChanges();
 
                 return Ok();
@@ -57,22 +52,27 @@ public class AsistenciaController : ControllerBase {
     public async Task<ActionResult<Asistencia>> get(string codIngreso) {
         try {
             if(User.IsInRole("Admin")) {
-                var result = await context.asistencias
-                    .Include(x => x.usuario)
-                    .Select(x => new {
-                        codIngreso = x.codIngreso,
-                        horaIngreso = x.horaIngreso,
-                        horaSalida = x.horaSalida,
-                        usuario = new {
-                            idUsuario = x.usuario.idUsuario,
-                            nombre = x.usuario.nombre,
-                            apellido = x.usuario.apellido
-                        }
-                    })
-                    .Where(x => x.codIngreso == codIngreso)
-                    .ToListAsync();
+                var result = await context.ingresos.FirstOrDefaultAsync(x => x.codIngreso == codIngreso);
 
-                return Ok(result);
+                if(result != null) {
+                    var lista = await context.asistencias
+                        .Include(x => x.usuario)
+                        .Select(x => new {
+                            codIngreso = x.codIngreso,
+                            horaIngreso = x.horaIngreso,
+                            horaSalida = x.horaSalida,
+                            usuario = new {
+                                idUsuario = x.usuario.idUsuario,
+                                nombre = x.usuario.nombre,
+                                apellido = x.usuario.apellido
+                            }
+                        })
+                        .Where(x => x.codIngreso == result.codIngreso)
+                        .ToListAsync();
+
+                    return Ok(lista);
+                }
+                return BadRequest();
             }
             return BadRequest();
         } catch(Exception ex) {

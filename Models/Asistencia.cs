@@ -9,7 +9,7 @@ public class Asistencia {
     public string? horaSalida { get; set; }
 
     [ForeignKey(nameof(codIngreso))]
-    public Ingreso ingreso { get; set; }
+    public Ingreso? ingreso { get; set; }
     [ForeignKey(nameof(idUsuario))]
-    public Usuario usuario { get; set; }
+    public Usuario? usuario { get; set; }
 }
