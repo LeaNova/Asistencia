@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-11-2023 a las 15:28:48
+-- Tiempo de generación: 13-11-2023 a las 20:22:31
 -- Versión del servidor: 10.4.27-MariaDB
 -- Versión de PHP: 8.1.12
 
@@ -39,8 +39,14 @@ CREATE TABLE `asistencias` (
 --
 
 INSERT INTO `asistencias` (`codIngreso`, `idUsuario`, `horaIngreso`, `horaSalida`) VALUES
-('071120234p', 2, '11:19 PM', '11:19 PM'),
-('08112023hW', 2, '0:02 AM', '0:03 AM');
+('09112023G6', 2, NULL, NULL),
+('09112023G6', 3, NULL, NULL),
+('09112023G6', 4, NULL, NULL),
+('12112023Zd', 2, '10:22 PM', '11:01 PM'),
+('12112023Zd', 3, NULL, NULL),
+('12112023Zd', 4, NULL, NULL),
+('12112023Zd', 9, NULL, NULL),
+('12112023Zd', 10, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -115,11 +121,8 @@ CREATE TABLE `ingresos` (
 --
 
 INSERT INTO `ingresos` (`codIngreso`, `fecha`) VALUES
-('05112023sL', '2023-11-05'),
-('071120234p', '2023-11-07'),
-('08112023hW', '2023-11-08'),
-('25102023oM', '2023-10-25'),
-('26102023eZ', '2023-10-26'),
+('09112023G6', '2023-11-09'),
+('12112023Zd', '2023-11-12'),
 ('27102023rD', '2023-10-27'),
 ('31102023DM', '2023-10-31');
 
@@ -185,9 +188,11 @@ CREATE TABLE `usuarios` (
 
 INSERT INTO `usuarios` (`idUsuario`, `nombre`, `apellido`, `fechaNac`, `dni`, `idGenero`, `idEstCivil`, `direccion`, `telefono`, `mail`, `pass`, `fechaIngreso`, `idRol`, `disponible`) VALUES
 (1, 'Admin', 'Admin', '2023-10-17', '000000000', 1, 1, 'Empresa', '0000000000', 'admin@admin.com', 'E+yozJZ8qCSQL0cOMij0qs0KAVKj3HZQi39lyNu4nLI=', '2023-10-17', 1, 1),
-(2, 'Leandro', 'Heredia', '1996-08-06', '39612902', 1, 1, 'si', '02664896870', 'lea@hotmail.com', 'E+yozJZ8qCSQL0cOMij0qs0KAVKj3HZQi39lyNu4nLI=', '2023-10-23', 3, 1),
+(2, 'Leandro', 'Heredia', '1996-08-06', '3961', 1, 1, 'si', '266489', 'lea@hotmail.com', '1FL0BX8yOInH3RPvkEKM4LNPu4MBVDzTJuTQFgFjvME=', '2023-10-23', 3, 1),
 (3, 'Luis', 'Ramirez', '1991-03-21', '27444220', 1, 2, 'Alguna casa', '26641105298', 'luis@mail.com', 'E+yozJZ8qCSQL0cOMij0qs0KAVKj3HZQi39lyNu4nLI=', '2023-10-23', 3, 1),
-(4, 'Amanda', 'Tomayo', '2002-12-12', '537559523', 2, 1, 'La direccion', '2665258790', 'amanda@mail.com', 'E+yozJZ8qCSQL0cOMij0qs0KAVKj3HZQi39lyNu4nLI=', '2023-10-26', 3, 1);
+(4, 'Amanda', 'Tomayo', '2002-12-12', '53759523', 2, 1, 'La direccion', '2665258790', 'amanda@mail.com', 'E+yozJZ8qCSQL0cOMij0qs0KAVKj3HZQi39lyNu4nLI=', '2023-10-26', 3, 1),
+(9, 'Alejandra', 'Muñoz', '2023-11-01', '12333', 1, 2, 'Entre las calles 150', '1557895', 'ale@hotmail.com', 'j7kX2gbgMD6OqFOabPwkuvaeLWE2yqqvi77NUJaYHS8=', '2023-11-09', 2, 1),
+(10, 'Rita', 'Hill', '1995-02-10', '5789998', 2, 2, 'Calle falsa 23', '15889', 'hill@hotmail.com', 'TEG1pn9l0wdmv9isgKuZ3oaZEMiZfrSB/CzpJk3M5fk=', '2023-11-11', 4, 1);
 
 --
 -- Índices para tablas volcadas
@@ -289,7 +294,7 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT de la tabla `usuarios`
 --
 ALTER TABLE `usuarios`
-  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idUsuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- Restricciones para tablas volcadas
