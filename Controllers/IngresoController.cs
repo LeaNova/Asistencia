@@ -111,7 +111,7 @@ public class IngresoController : ControllerBase {
     private void createAsistencias(string codIngreso) {
         var idUsuarios = context.usuarios
             .Include(x => x.rol)
-            .Where(x => x.rol.nombre != "Admin")
+            .Where(x => x.rol.nombre != "Admin").Where(x => x.disponible == true)
             .Select(x => x.idUsuario)
             .ToList();
 
